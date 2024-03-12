@@ -11,21 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', static function (Blueprint $table) {
+        Schema::create('wallets', static function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('user_id')->constrained('users');
 
-            $table->string('name');
-            $table->string('email');
-            $table->string('document');
-            $table->string('password');
-            $table->enum('type', \Arr::pluck(\App\Enums\UserType::cases(), 'value'));
+            $table->float('balance');
 
             $table->timestamps(3);
-
-            $table->unique([
-                'email',
-                'document'
-            ]);
         });
     }
 
@@ -34,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('wallets');
     }
 };
