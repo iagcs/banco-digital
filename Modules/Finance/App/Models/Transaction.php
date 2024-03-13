@@ -2,7 +2,7 @@
 
 namespace Modules\Finance\App\Models;
 
-use App\Enums\FinanceOperationStatus;
+use App\Enums\TransactionStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 //use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 //use Modules\Finance\Database\factories\FinanceOperationFactory;
 use Modules\User\App\Models\User;
 
-class FinanceOperation extends Model
+class Transaction extends Model
 {
     use HasUuids /*, HasFactory*/;
 
@@ -23,16 +23,16 @@ class FinanceOperation extends Model
     ];
 
     protected $casts = [
-        'status' => FinanceOperationStatus::class
+        'status' => TransactionStatus::class
     ];
 
     protected $attributes = [
-        'status' => FinanceOperationStatus::WAITING
+        'status' => TransactionStatus::WAITING
     ];
 
-    public function receiver(): BelongsTo
+    public function payee(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'receiver_id');
+        return $this->belongsTo(User::class, 'payee_id');
     }
 
     public function payer(): BelongsTo

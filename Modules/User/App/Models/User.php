@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 //use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Modules\Finance\App\Models\FinanceOperation;
+use Modules\Finance\App\Models\Transaction;
 //use Modules\User\Database\factories\UserFactory;
 
 class User extends Model
@@ -40,12 +40,12 @@ class User extends Model
 
     public function outflow_transactions(): HasMany
     {
-        return $this->hasMany(FinanceOperation::class, 'payer_id');
+        return $this->hasMany(Transaction::class, 'payer_id');
     }
 
     public function inflow_transactions(): HasMany
     {
-        return $this->hasMany(FinanceOperation::class, 'receiver_id');
+        return $this->hasMany(Transaction::class, 'payee_id');
     }
 
     /*protected static function newFactory(): UserFactory

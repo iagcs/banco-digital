@@ -31,4 +31,8 @@ return [
         ],
     ],
 
+    'transaction' => [
+        'url' => env('VERIFY_TRANSACTION_URL')
+    ]
+
 ];

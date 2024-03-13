@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum FinanceOperationStatus: string
+enum TransactionStatus: string
 {
     case SUCCESS = 'sucesso';
     case WAITING = 'aguardando';
