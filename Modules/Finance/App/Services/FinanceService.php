@@ -2,61 +2,62 @@
 
 namespace Modules\Finance\App\Services;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
+use App\Enums\TransactionStatus;
+use Illuminate\Validation\ValidationException;
 use Modules\Finance\App\DTO\TransactionData;
+use Modules\Finance\App\Jobs\ProcessTransaction;
 use Modules\Finance\App\Models\Transaction;
-use Modules\User\App\Services\WalletService;
-use Symfony\Component\HttpFoundation\Response;
+use Modules\Finance\App\Repositories\FinanceRepository;
+use Modules\User\App\Repositories\WalletRepository;
+use Modules\User\App\Services\MailService;
 
 class FinanceService
 {
-    public function __construct(private readonly WalletService $walletService) {}
+    public function __construct(
+        private readonly FinanceRepository $financeRepository,
+        private readonly WalletRepository $walletRepository,
+        private readonly TransactionService $transactionService,
+        private readonly MailService $mailService
+    ) {}
 
-    public function transaction(TransactionData $data): Transaction
+    public function initiateTransaction(TransactionData $data): void
     {
-        return DB::transaction(function () use ($data) {
-            $transaction = $this->createTransaction($data);
+        $transaction = $this->financeRepository->createTransaction($data);
 
-            $this->updateWallets($data);
-
-            $this->verifyTransaction();
-
-            $this->sendEmail($data->payee);
-
-            return $transaction;
-        });
-    }
-
-    private function sendEmail(User $payee): void
-    {
-
-    }
-
-    private function createTransaction(TransactionData $data): Transaction
-    {
-        $transaction = new Transaction(['value' => $data->value]);
-
-        $transaction->payee()->associate($data->payee);
-        $transaction->payer()->associate($data->payer);
-
-        $transaction->save();
-
-        return $transaction;
-    }
-
-    private function updateWallets(TransactionData $data): void
-    {
-        $this->walletService->updateBalance($data->payee, $data->value);
-        $this->walletService->updateBalance($data->payer, $data->value * -1.0);
-    }
-
-    private function verifyTransaction(): void
-    {
-        $response = Http::get(config('services.transaction.url'));
-
-        if ($response->failed()) {
-            abort(Response::HTTP_BAD_REQUEST, 'Transação não autorizada pelo serviço externo.');
+        if(!$transaction){
+            abort(400, "Nao foi possivel inicializar transacao");
         }
+
+        ProcessTransaction::dispatch($transaction);
+    }
+
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function processTransaction(Transaction $transaction): void
+    {
+        if ($this->transactionService->verifyTransactionCanBeMade()) {
+            $this->handleSuccessfulTransaction($transaction);
+
+            $this->mailService->sendNotificationMail($transaction);
+
+            return;
+        }
+
+        $this->handleFailedTransaction($transaction);
+    }
+
+    private function handleSuccessfulTransaction(Transaction $transaction): void
+    {
+        $this->financeRepository->updateStatus($transaction, TransactionStatus::SUCCESS);
+
+        $this->walletRepository->updateWallets($transaction->getData());
+    }
+
+    private function handleFailedTransaction(Transaction $transaction): void
+    {
+        $this->financeRepository->updateStatus($transaction, TransactionStatus::FAILED);
+
+        throw ValidationException::withMessages(['message' => 'Transação não autorizada pelo serviço externo.']);
     }
 }

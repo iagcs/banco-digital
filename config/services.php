@@ -32,7 +32,17 @@ return [
     ],
 
     'transaction' => [
-        'url' => env('VERIFY_TRANSACTION_URL')
+        'base_uri' => env('VERIFY_TRANSACTION_URL'),
+        'endpoints' => [
+            'verify' => '/v3/5794d450-d2e2-4412-8131-73d0293ac1cc'
+        ]
+    ],
+
+    'mail' => [
+        'base_uri' => env('VERIFY_TRANSACTION_URL'),
+        'endpoints' => [
+            'send' => '/v3/5794d450-d2e2-4412-8131-73d0293ac1cc'
+        ]
     ]
 
 ];

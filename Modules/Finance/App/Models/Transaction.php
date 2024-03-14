@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 //use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 //use Modules\Finance\Database\factories\FinanceOperationFactory;
+use Modules\Finance\App\DTO\TransactionData;
 use Modules\User\App\Models\User;
+use Spatie\LaravelData\WithData;
 
 class Transaction extends Model
 {
-    use HasUuids /*, HasFactory*/;
+    use HasUuids, WithData /*, HasFactory*/;
 
+    protected $dataClass = TransactionData::class;
     /**
      * The attributes that are mass assignable.
      */

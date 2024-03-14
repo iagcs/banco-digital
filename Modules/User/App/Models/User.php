@@ -5,15 +5,19 @@ namespace Modules\User\App\Models;
 use App\Enums\UserType;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
-//use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\Finance\App\Models\Transaction;
-//use Modules\User\Database\factories\UserFactory;
+use Modules\User\App\DTO\UserData;
+use Modules\User\Database\Factories\UserFactory;
+use Spatie\LaravelData\WithData;
 
 class User extends Model
 {
-    use HasUuids/*, HasFactory*/;
+    use HasUuids, WithData, HasFactory;
+
+    protected $dataClass = UserData::class;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +27,7 @@ class User extends Model
         'email',
         'document',
         'password',
+        'type'
     ];
 
     protected $casts = [
@@ -48,8 +53,8 @@ class User extends Model
         return $this->hasMany(Transaction::class, 'payee_id');
     }
 
-    /*protected static function newFactory(): UserFactory
+    protected static function newFactory(): UserFactory
     {
-        //return UserFactory::new();
-    }*/
+        return UserFactory::new();
+    }
 }

@@ -9,11 +9,11 @@ use Modules\User\App\Models\User;
 
 class TransactionPermission implements ValidationRule
 {
-    private User $user;
+    private $user;
 
     public function __construct(private string $payer)
     {
-        $this->user = User::find($this->payer);
+        $this->user = User::query()->find($this->payer);
     }
 
     /**

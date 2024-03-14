@@ -13,8 +13,10 @@ class FinanceController extends Controller
     /**
      * @throws \Spatie\LaravelData\Exceptions\InvalidDataClass
      */
-    public function transaction(TransactionRequest $request)
+    public function store(TransactionRequest $request)
     {
-        return $this->service->transaction($request->getData());
+        $this->service->initiateTransaction($request->getData());
+
+        return response('Transacao iniciada.', 200);
     }
 }

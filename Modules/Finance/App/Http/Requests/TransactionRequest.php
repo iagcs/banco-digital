@@ -21,13 +21,13 @@ class TransactionRequest extends FormRequest
                 'bail',
                 'required',
                 'uuid',
-                'exists:user,id'
+                'exists:users,id'
             ],
             'payer' => [
                 'bail',
                 'required',
                 'uuid',
-                'exists:user,id',
+                'exists:users,id',
                 new TransactionPermission($this->input('payer'))
             ],
             'value' => [
