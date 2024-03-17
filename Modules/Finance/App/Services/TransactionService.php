@@ -2,24 +2,23 @@
 
 namespace Modules\Finance\App\Services;
 
-use GuzzleHttp\Client;
+use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
 
 class TransactionService
 {
-    private Client $client;
+    private PendingRequest $client;
 
     public function __construct()
     {
-        $this->client = new Client(['base_uri' => config('services.transaction.base_uri')]);
+        $this->client = Http::baseUrl(config('services.transaction.base_uri'));
     }
 
-    /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
+
     public function verifyTransactionCanBeMade(): bool
     {
-        $status = $this->client->get(config('services.transaction.endpoints.verify'))->getStatusCode();
+        $status = $this->client->get(config('services.transaction.endpoints.verify'))->status();
 
         return $status === Response::HTTP_OK;
     }

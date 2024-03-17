@@ -3,9 +3,11 @@
 namespace Modules\Finance\App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Modules\Finance\App\DTO\TransactionData;
 use Modules\Finance\App\Rules\SufficientBalance;
 use Modules\Finance\App\Rules\TransactionPermission;
+use Modules\User\App\Models\User;
 use Spatie\LaravelData\WithData;
 
 class TransactionRequest extends FormRequest
@@ -28,13 +30,13 @@ class TransactionRequest extends FormRequest
                 'required',
                 'uuid',
                 'exists:users,id',
-                new TransactionPermission($this->input('payer'))
+                $this->input('payer') ? new TransactionPermission : ''
             ],
             'value' => [
                 'bail',
                 'required',
                 'numeric',
-                new SufficientBalance($this->input('payer'))
+                $this->input('payer') ? new SufficientBalance($this->input('payer')) : ''
             ]
         ];
     }

@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+    # Laravel application container
+    laravel:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - .:/app
+        command: sh -c "php artisan migrate && php artisan serve --host=0.0.0.0 --port=8000"
+        ports:
+            - '8000:8000'
+        depends_on:
+            - postgres
+            - redis
+    # Postgres database container
+    postgres:
+        image: postgres:latest
+        ports:
+            - '5434:5432'
+        environment:
+            PGPASSWORD: '${DB_PASSWORD:-secret}'
+            POSTGRES_DB: '${DB_DATABASE}'
+            POSTGRES_USER: '${DB_USERNAME}'
+            POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+        volumes:
+            - ./docker-compose/pgsql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+    # Redis service
+    redis:
+        image: redis:latest
+        ports:
+            - '6378:6379'
+
+    nginx:
+        image: nginx:1.19
+        volumes:
+            - ./public:/var/www/html
+        ports:
+            - "81:80"

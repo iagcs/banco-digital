@@ -5,16 +5,16 @@ namespace Modules\Finance\App\Models;
 use App\Enums\TransactionStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
-//use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-//use Modules\Finance\Database\factories\FinanceOperationFactory;
 use Modules\Finance\App\DTO\TransactionData;
+use Modules\Finance\Database\Factories\TransactionFactory;
 use Modules\User\App\Models\User;
 use Spatie\LaravelData\WithData;
 
 class Transaction extends Model
 {
-    use HasUuids, WithData /*, HasFactory*/;
+    use HasUuids, WithData, HasFactory;
 
     protected $dataClass = TransactionData::class;
     /**
@@ -43,8 +43,8 @@ class Transaction extends Model
         return $this->belongsTo(User::class, 'payer_id');
     }
 
-    /*protected static function newFactory(): FinanceOperationFactory
+    protected static function newFactory(): TransactionFactory
     {
-        //return FinanceOperationFactory::new();
-    }*/
+        return TransactionFactory::new();
+    }
 }

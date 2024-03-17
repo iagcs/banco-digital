@@ -4,6 +4,7 @@ namespace Modules\User\Database\Factories;
 
 use App\Enums\UserType;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 
 class UserFactory extends Factory
@@ -19,11 +20,11 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => $this->faker->uuid,
-            'name' => $this->faker->name,
-            'document' => $this->faker->numerify,
-            'email' => $this->faker->email,
-            'password' => $this->faker->password,
+            'id' => fake()->uuid,
+            'name' => fake()->name,
+            'document' => fake()->numerify,
+            'email' => fake()->email,
+            'password' => fake()->password,
             'type' => Arr::random(UserType::cases())
         ];
     }

@@ -21,11 +21,11 @@ class SufficientBalance implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if(!$this->user->wallet){
-            abort(400,'Esse usuario nao tem uma carteira cadastrada.');
+            $fail('Esse usuario nao tem uma carteira cadastrada.');
         }
 
-        if($this->user->wallet->balance < $value){
-            abort(400,'Esse usuario nao tem saldo suficiente para realizar essa transacao.');
+        elseif($this->user->wallet->balance < $value){
+            $fail('Esse usuario nao tem saldo suficiente para realizar essa transacao.');
         }
     }
 }

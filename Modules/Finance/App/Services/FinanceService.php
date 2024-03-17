@@ -3,21 +3,20 @@
 namespace Modules\Finance\App\Services;
 
 use App\Enums\TransactionStatus;
+use App\Jobs\SendMailPaymentReceivedJob;
 use Illuminate\Validation\ValidationException;
 use Modules\Finance\App\DTO\TransactionData;
 use Modules\Finance\App\Jobs\ProcessTransaction;
 use Modules\Finance\App\Models\Transaction;
 use Modules\Finance\App\Repositories\FinanceRepository;
 use Modules\User\App\Repositories\WalletRepository;
-use Modules\User\App\Services\MailService;
 
 class FinanceService
 {
     public function __construct(
         private readonly FinanceRepository $financeRepository,
         private readonly WalletRepository $walletRepository,
-        private readonly TransactionService $transactionService,
-        private readonly MailService $mailService
+        private readonly TransactionService $transactionService
     ) {}
 
     public function initiateTransaction(TransactionData $data): void
@@ -39,7 +38,7 @@ class FinanceService
         if ($this->transactionService->verifyTransactionCanBeMade()) {
             $this->handleSuccessfulTransaction($transaction);
 
-            $this->mailService->sendNotificationMail($transaction);
+           SendMailPaymentReceivedJob::dispatch($transaction->toArray());
 
             return;
         }
@@ -51,7 +50,7 @@ class FinanceService
     {
         $this->financeRepository->updateStatus($transaction, TransactionStatus::SUCCESS);
 
-        $this->walletRepository->updateWallets($transaction->getData());
+        $this->walletRepository->updateWallets($transaction->payer, $transaction->payee, $transaction->value);
     }
 
     private function handleFailedTransaction(Transaction $transaction): void
