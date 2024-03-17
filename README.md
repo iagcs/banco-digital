@@ -16,12 +16,12 @@ Este projeto utiliza o serviço de mensageria da AWS, o SQS (Amazon Simple Queue
 1. Clone o repositório da aplicação Laravel:
 
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio-laravel.git
+   git clone https://github.com/seu-usuario/seu-repositorio-laravel.git](https://github.com/iagcs/banco-digital.git
 
 2. Navegue até o diretório da aplicação:
 
    ```bash
-   cd seu-repositorio-laravel
+   cd banco-digital
 
 3. Crie um arquivo .env na raiz do diretório da aplicação, baseando-se no arquivo .env.example. Você pode usar o comando cp no Unix/Linux ou copy no Windows:
 
