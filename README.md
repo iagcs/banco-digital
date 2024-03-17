@@ -16,7 +16,7 @@ Este projeto utiliza o serviço de mensageria da AWS, o SQS (Amazon Simple Queue
 1. Clone o repositório da aplicação Laravel:
 
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio-laravel.git](https://github.com/iagcs/banco-digital.git
+   git clone https://github.com/iagcs/banco-digital.git
 
 2. Navegue até o diretório da aplicação:
 
