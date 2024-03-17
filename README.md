@@ -1,4 +1,4 @@
-# Simulação PicPay
+# Simulação Banco Digital
 
 Este guia explica como configurar e executar esse projeto corretamente. 
 
