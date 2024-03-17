@@ -4,6 +4,8 @@ Este guia explica como configurar e executar esse projeto corretamente.
 
 Antes de colocar em prática todo o desenvolvimento do projeto, modelei a estrutura de banco de dados, onde ficou mais facil mapear e visualizar toda a logica de negócio da aplicação. Confira o diagrama [aqui](https://lucid.app/lucidchart/2e916aff-51ab-41f4-a2da-bf5ca99101f6/edit?invitationId=inv_f7890475-b095-4497-962f-b884bec50129).
 
+Este projeto utiliza o serviço de mensageria da AWS, o SQS (Amazon Simple Queue Service), para se comunicar com o microsserviço de envio de e-mail. A comunicação acontece ao enviar uma mensagem contendo os dados da transação para o microsserviço "mail-service" através da fila "mail-queue".
+
 ## Pré-requisitos
 
 - [Docker](https://docs.docker.com/get-docker/)
@@ -72,3 +74,7 @@ Antes de colocar em prática todo o desenvolvimento do projeto, modelei a estrut
    ou
    
    docker exec -it <id-container-aplicacao> /bin/sh
+   
+4. Por fim, para executar os testes da aplicacao:
+    ```bash
+   php artisan test
