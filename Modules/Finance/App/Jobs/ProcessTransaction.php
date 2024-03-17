@@ -22,8 +22,6 @@ class ProcessTransaction implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function handle(FinanceService $service): void
     {

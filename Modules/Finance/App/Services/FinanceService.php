@@ -30,15 +30,12 @@ class FinanceService
         ProcessTransaction::dispatch($transaction);
     }
 
-    /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
     public function processTransaction(Transaction $transaction): void
     {
         if ($this->transactionService->verifyTransactionCanBeMade()) {
             $this->handleSuccessfulTransaction($transaction);
 
-           SendMailPaymentReceivedJob::dispatch($transaction->toArray());
+            SendMailPaymentReceivedJob::dispatch($transaction->toArray())->onQueue('mail-queue');
 
             return;
         }
