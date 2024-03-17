@@ -75,6 +75,11 @@ Este projeto utiliza o serviço de mensageria da AWS, o SQS (Amazon Simple Queue
    
    docker exec -it <id-container-aplicacao> /bin/sh
    
+5. Para popular o banco:
+
+    ```bash
+   php artisan db:seed
+   
 4. Por fim, para executar os testes da aplicacao:
     ```bash
    php artisan test

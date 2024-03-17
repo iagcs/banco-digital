@@ -43,16 +43,6 @@ class User extends Model
         return $this->hasOne(Wallet::class);
     }
 
-    public function outflow_transactions(): HasMany
-    {
-        return $this->hasMany(Transaction::class, 'payer_id');
-    }
-
-    public function inflow_transactions(): HasMany
-    {
-        return $this->hasMany(Transaction::class, 'payee_id');
-    }
-
     protected static function newFactory(): UserFactory
     {
         return UserFactory::new();

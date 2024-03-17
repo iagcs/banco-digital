@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Modules\User\App\Models\User;
+use Modules\User\App\Models\Wallet;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        $payer = User::factory()->create(['type' => \App\Enums\UserType::COMMON]);
+        $payee = User::factory()->create(['type' => \App\Enums\UserType::SHOPKEEPER]);
+
+        Wallet::factory()->for($payer)->create(['balance' => 150]);
+        Wallet::factory()->for($payee)->create(['balance' => 100]);
     }
 }
