@@ -37,7 +37,7 @@ Antes de colocar em prática todo o desenvolvimento do projeto, modelei a estrut
 
 - Para execução da fila, estou usando o servico de mensageria da AWS, o SQS. Portanto é necessário seguir os seguintes passos:
     
-1. Crie um usuario administrativo na sua conta da AWS. Voce pode conferir como fazer isso [aqui](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-setting-up.html).
+1. Se não houver, crie um usuario administrativo na sua conta da AWS. Voce pode conferir como fazer isso [aqui](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-setting-up.html).
 
 2. Crie uma nova fila com o nome de "main-queue".
 
