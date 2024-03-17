@@ -3,7 +3,6 @@
 use Modules\Finance\App\Repositories\FinanceRepository;
 use Modules\Finance\App\Models\Transaction;
 use App\Enums\TransactionStatus;
-use Illuminate\Support\Facades\DB;
 use Modules\User\App\Models\User;
 use App\Enums\UserType;
 use Modules\Finance\App\DTO\TransactionData;
@@ -31,9 +30,9 @@ describe('test finance repository class', function(){
         $result = $financeRepository->createTransaction($transactionData);
 
         expect($result)->toBeInstanceOf(Transaction::class)
-            ->and($result->value)->toEqual($transactionData->value)
-            ->and($result->payer_id)->toEqual($transactionData->payer->id)
-            ->and($result->payee_id)->toEqual($transactionData->payee->id);
+            ->and($result?->value)->toEqual($transactionData->value)
+            ->and($result?->payer_id)->toEqual($transactionData->payer->id)
+            ->and($result?->payee_id)->toEqual($transactionData->payee->id);
     });
 
 
