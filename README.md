@@ -83,3 +83,56 @@ Este projeto utiliza o serviço de mensageria da AWS, o SQS (Amazon Simple Queue
 4. Por fim, para executar os testes da aplicacao:
     ```bash
    php artisan test
+
+
+# Documentação da API
+
+A rota `/transaction` é usada para realizar transações entre usuários.
+
+## Requisição
+
+### Método
+
+`POST`
+
+### Endpoint
+
+`/transaction`
+
+### Corpo da Requisição
+
+| Parâmetro | Tipo   | Descrição                                        |
+|-----------|--------|--------------------------------------------------|
+| payee     | string | ID do usuário destinatário da transação (UUID)   |
+| payer     | string | ID do usuário remetente da transação (UUID)      |
+| value     | number | Valor da transação                               |
+
+### Exemplo de Corpo da Requisição
+
+```json
+{
+    "payee": "c2dcec43-662b-4de8-b3c4-99672c4c4e02",
+    "payer": "66bdff29-42bc-4b22-a0f2-1faecda0e2cd",
+    "value": 100.00
+}
+```
+
+## Resposta
+
+### Códigos de Resposta
+
+| Código | Descrição                                |
+|--------|------------------------------------------|
+| 200    | Transação iniciada com sucesso           |
+| 400    | Erro na validação dos dados da transação |
+
+## Regras de Validação
+
+| Campo  | Regras                                                                                                                                                                                    |
+|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| payee  | ID do usuário destinatário da transação. Deve ser um UUID válido e corresponder a um usuário existente.                                                                                   |
+| payer  | ID do usuário remetente da transação. Deve ser um UUID válido e corresponder a um usuário existente. Além disso, o remetente deve ser um usuário do tipo comun para realizar a transação. |
+| value  | Valor da transação. Deve ser um número e o remetente deve ter saldo suficiente na carteira para realizar a transação.                                                                     |
+
+
+
