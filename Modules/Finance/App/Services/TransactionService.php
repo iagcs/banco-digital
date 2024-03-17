@@ -12,7 +12,7 @@ class TransactionService
 
     public function __construct()
     {
-        $this->client = Http::baseUrl(config('services.transaction.base_uri'));
+        $this->client = once(static fn() => Http::baseUrl(config('services.transaction.base_uri')));
     }
 
 
