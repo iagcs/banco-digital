@@ -69,7 +69,7 @@ Este projeto utiliza o serviço de mensageria da AWS, o SQS (Amazon Simple Queue
 3. Para entrar no bash do projeto com o docker, execute o seguinte comando: 
 
     ```bash
-   docker exec -it pic-pay_laravel /bin/sh
+   docker exec -it banco-digital_laravel /bin/sh
    
    ou
    
