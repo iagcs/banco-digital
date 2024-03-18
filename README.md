@@ -43,11 +43,15 @@ Este projeto utiliza o serviço de mensageria da AWS, o SQS (Amazon Simple Queue
 
 2. Crie uma nova fila com o nome de "main-queue".
 
-3. Adicione sua chave de acesso da aws na variável AWS_ACCESS_KEY_ID.
+3. Configure as variáveis do SQS:
 
-4. Adicione sua chave de acesso secreta da aws na variável AWS_SECRET_ACCESS_KEY.
-
-5. Adicione a url (https://sqs.us-east-2.amazonaws.com/<account-id>) na variavel SQS_PREFIX
+    ```dotenv
+    AWS_ACCESS_KEY_ID=<sua-chave-de-acesso-aws>
+    AWS_SECRET_ACCESS_KEY=<sua-chave-secreta-de-acesso-aws>
+    AWS_DEFAULT_REGION=<regiao-da-fila>
+    AWS_SQS_REGION=<regiao-da-fila>
+    
+    SQS_PREFIX=https://sqs.<regiao-da-fila>.amazonaws.com/<id-da-sua-conta>
     
 ## Execução
 
