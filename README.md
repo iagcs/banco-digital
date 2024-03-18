@@ -47,12 +47,7 @@ Este projeto utiliza o serviço de mensageria da AWS, o SQS (Amazon Simple Queue
 
 4. Adicione sua chave de acesso secreta da aws na variável AWS_SECRET_ACCESS_KEY.
 
-5. Adicione a url (https://sqs.us-east-2.amazonaws.com/<account-id>) na variavel SQS_PREFIX 
-
-6. Agora sua fila ja deve estar funcionando corretamente. Para monitorar o envio de JOB na fila, voce pode usar o seguinte comando:
-
-    ```bash
-   php artisan queue:listen sqs
+5. Adicione a url (https://sqs.us-east-2.amazonaws.com/<account-id>) na variavel SQS_PREFIX
     
 ## Execução
 
@@ -75,12 +70,17 @@ Este projeto utiliza o serviço de mensageria da AWS, o SQS (Amazon Simple Queue
    
    docker exec -it <id-container-aplicacao> /bin/sh
    
-5. Para popular o banco:
+4. Para popular o banco:
 
     ```bash
    php artisan db:seed
    
-4. Por fim, para executar os testes da aplicacao:
+5. Para executar a fila:
+
+    ```bash
+   php artisan queue:listen sqs
+   
+6. Por fim, para executar os testes da aplicacao:
     ```bash
    php artisan test
     ```

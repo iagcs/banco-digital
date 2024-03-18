@@ -17,8 +17,4 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 WORKDIR /app
 COPY . /app
 
-RUN composer install
-
-RUN php artisan clear
-
 EXPOSE 8000
