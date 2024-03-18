@@ -136,7 +136,7 @@ A rota `/transaction` é usada para realizar transações entre usuários.
 |--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | payee  | ID do usuário destinatário da transação. Deve ser um UUID válido e corresponder a um usuário existente.                                                                                   |
 | payer  | ID do usuário remetente da transação. Deve ser um UUID válido e corresponder a um usuário existente. Além disso, o remetente deve ser um usuário do tipo comun para realizar a transação. |
-| value  | Valor da transação. Deve ser um número e o remetente deve ter saldo suficiente na carteira para realizar a transação.                                                                     |
+| value  | Valor da transação. Deve ser um número e o remetente deve ter uma carteira cadastrada e com saldo suficiente para realizar a transação.                                                   |
 
 
 
